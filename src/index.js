@@ -15,6 +15,12 @@ function counterDraw(time) {
     ('0' + Math.floor(time % 60)).slice(-2));
 }
 
+function changeBtnStyles(btnLink, classNameAdd, classNameRemove) {
+  btnLink.textContent = classNameAdd.toUpperCase();
+  btnLink.classList.remove(classNameRemove);
+  btnLink.classList.add(classNameAdd);
+}
+
 function querySelector(el) {
   return document.querySelector(el);
 }
@@ -40,22 +46,16 @@ const subscription = second$.subscribe(x => {
 startStopClick$.subscribe(e => {
   started = !started;
   if (started) {
-    startStopButton.textContent = 'STOP';
-    startStopButton.classList.remove('start');
-    startStopButton.classList.add('stop');
+    changeBtnStyles(startStopButton, 'stop', 'start');
     pauseButton.classList.remove('wait');
   } else {
-    startStopButton.textContent = 'START';
-    startStopButton.classList.add('start');
-    startStopButton.classList.remove('stop');
+    changeBtnStyles(startStopButton, 'start', 'stop');
   }
 });
 
 pauseClick$.subscribe(e => {
   started = false;
-  startStopButton.textContent = 'START';
-  startStopButton.classList.add('start');
-  startStopButton.classList.remove('stop');
+  changeBtnStyles(startStopButton, 'start', 'stop');
   pauseButton.classList.add('wait');
 });
 
